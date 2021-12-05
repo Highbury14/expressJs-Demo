@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -8,14 +9,20 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+var db = require("./app/models");
+
+var corsOptions = {
+  origin: "http://localhost:8081"
+};
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -36,6 +43,21 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+db.mongodb.mongoose.connect(db.mongodb.url, {
+  useNewUrlParser: true, useUnifiedTopology: true
+}).then(() => { console.log("Connected to the mongodb-database."); })
+.catch(err => {
+  console.log("Cannot connect to the mongodb-database !", err);
+  process.exit();
+});
+
+db.sqldb.sequelize.sync().then(() => {
+  console.log("Connected to the sql-database.");
+}).catch(err => {
+  console.log("Cannot connect to the sql-database !", err);
+  process.exit();
 });
 
 module.exports = app;
