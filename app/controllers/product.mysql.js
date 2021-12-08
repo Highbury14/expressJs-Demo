@@ -47,7 +47,7 @@ exports.findOne = (req, res) => {
       message: "Product with id: ${id}, not found."
     });
   } }).catch(err => { res.status(500).send({
-    message: "Error retrieving product with id: ${id}."
+    message: err.message || "Error retrieving product with id: ${id}."
   }); });
 };
 
@@ -60,21 +60,36 @@ exports.update = (req, res) => {
   } else { res.send({
     message: "Product with id: ${id}, not updated. Maybe it doesn't exist !"
   }); } }).catch(err => { res.status(500).send({
-    message: "Error updating product with id: ${id}."
+    message: err.message || "Error updating product with id: ${id}."
   }); });
 };
 
 // Delete a Product with the specified id in the request
 exports.delete = (req, res) => {
-  
+  const id = req.params.id;
+
+  Product.destroy({ where: { id: id } }).then(num => { if (num == 1) { res.send({
+    message: "Product deleted successfully !"
+  }); } else { res.send({
+    message: "Product with id: ${id}, not deleted. Maybe it doesn't exist !"
+  }); } }).catch(err => { res.status(500).send({
+    message: err.message || "Error deleting product with id: ${id}."
+  }); });
 };
 
 // Delete all Products from the database.
 exports.deleteAll = (req, res) => {
-  
+  Product.destroy({ where: {}, truncate: false }).then(nums => { res.send({
+    message: "${nums} products deleted successfully !"
+  }); }).catch(err => { res.status(500).send({
+    message: err.message || "Error while deleting products."
+  }); });
 };
 
 // Find all manufactured Products
 exports.findAllManufactured = (req, res) => {
-  
+  Product.findAll({ where: { manufactured: true } }).then(data => { res.send(data); })
+  .catch(err => { res.status(500).send({
+    message: err.message || "Error while retrieving products."
+  }); });
 };
