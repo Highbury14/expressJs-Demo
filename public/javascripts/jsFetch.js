@@ -13,7 +13,7 @@ async function getAllData() {
   resultElement.innerHTML = "";
 
   try {
-    const res = await fetch(`${baseURL}/tutorials`);
+    const res = await fetch(`${baseURL}/products`);
 
     if (!res.ok) {
       const message = `An error has occured: ${res.status} - ${res.statusText}`;
@@ -46,7 +46,7 @@ async function getDataById() {
 
   if (id) {
     try {
-      const res = await fetch(`${baseURL}/tutorials/${id}`);
+      const res = await fetch(`${baseURL}/products/${id}`);
 
       if (!res.ok) {
         const message = `An error has occured: ${res.status} - ${res.statusText}`;
@@ -80,9 +80,9 @@ async function getDataByTitle() {
 
   if (title) {
     try {
-      // const res = await fetch(`${baseURL}/tutorials?title=${title}`);
+      // const res = await fetch(`${baseURL}/products?title=${title}`);
 
-      let url = new URL(`${baseURL}/tutorials`);
+      let url = new URL(`${baseURL}/products`);
       const params = { title: title };
       url.search = new URLSearchParams(params);
 
@@ -124,7 +124,7 @@ async function postData() {
   };
 
   try {
-    const res = await fetch(`${baseURL}/tutorials`, {
+    const res = await fetch(`${baseURL}/products`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -171,7 +171,7 @@ async function putData() {
   };
 
   try {
-    const res = await fetch(`${baseURL}/tutorials/${id}`, {
+    const res = await fetch(`${baseURL}/products/${id}`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -204,7 +204,7 @@ async function deleteAllData() {
   resultElement.innerHTML = "";
 
   try {
-    const res = await fetch(`${baseURL}/tutorials`, { method: "delete" });
+    const res = await fetch(`${baseURL}/products`, { method: "delete" });
 
     const data = await res.json();
 
@@ -227,7 +227,7 @@ async function deleteDataById() {
   const id = document.getElementById("delete-id").value;
 
   try {
-    const res = await fetch(`${baseURL}/tutorials/${id}`, { method: "delete" });
+    const res = await fetch(`${baseURL}/products/${id}`, { method: "delete" });
 
     const data = await res.json();
 
