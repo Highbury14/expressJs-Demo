@@ -1,5 +1,3 @@
-const { NotFound } = require("http-errors");
-const { deleteModel } = require("mongoose");
 const db = require("../models");
 const Product = db.sqldb.product;
 const Op = db.sqldb.Sequelize.Op;
