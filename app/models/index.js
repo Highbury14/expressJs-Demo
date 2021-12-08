@@ -19,10 +19,10 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 const db = {};
 db.mongodb.mongoose = mongoose;
 db.mongodb.url = dbConfig.mongodburl;
-db.mongodb.products = require("./product.mongodb.js")(mongoose);
+db.mongodb.product = require("./product.mongodb.js")(mongoose);
 
 db.sqldb.Sequelize = Sequelize;
 db.sqldb.sequelize = sequelize;
-db.sqldb.products = require("./product.mysql.js")(sequelize, Sequelize);
+db.sqldb.product = require("./product.mysql.js")(sequelize, Sequelize);
 
 module.exports = db;
