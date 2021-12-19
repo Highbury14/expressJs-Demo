@@ -30,7 +30,7 @@ exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Tutorial.findAll({ where: condition }).then(data => { res.send(data); })
+  Product.findAll({ where: condition }).then(data => { res.send(data); })
   .catch(err => { res.status(500).send({
     message: err.message || "Error while retrieving products."
   }); });
@@ -40,7 +40,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Tutorial.findByPk(id).then(data => { if (data) { res.send(data); } else {
+  Product.findByPk(id).then(data => { if (data) { res.send(data); } else {
     res.status(404).send({
       message: "Product with id: ${id}, not found."
     });
@@ -53,7 +53,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Tutorial.update(req.body, { where: { id: id } }).then(num => { if (num == 1) {
+  Product.update(req.body, { where: { id: id } }).then(num => { if (num == 1) {
     res.send({ message: "Product updated successfully." });
   } else { res.send({
     message: "Product with id: ${id}, not updated. Maybe it doesn't exist !"
