@@ -1,5 +1,5 @@
 module.exports = {
-  mongodburl: "mongodb://localhost:27017/express_js_demo/",
+  mongodburl: "mongodb://localhost:27017/express_js_demo",
   HOST: "localhost",
   USER: "root",
   PASSWORD: "",

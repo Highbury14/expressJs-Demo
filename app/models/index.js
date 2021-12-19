@@ -16,7 +16,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   }
 });
 
-const db = {};
+const db = {mongodb: {}, sqldb: {}};
 db.mongodb.mongoose = mongoose;
 db.mongodb.url = dbConfig.mongodburl;
 db.mongodb.product = require("./product.mongodb.js")(mongoose);

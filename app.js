@@ -16,6 +16,8 @@ var db = require("./app/models");
 var corsOptions = {
   origin: "http://localhost:8081"
 };
+app.locals.mongoDbStatus = true;
+app.locals.mysqlDbStatus = true;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,8 +32,30 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api/mongoDb', apiRouterMongoDb);
-app.use('/api/sqlDb', apiRouterSqlDb);
+
+db.mongodb.mongoose.connect(db.mongodb.url, {
+  useNewUrlParser: true, useUnifiedTopology: true
+}).then(() => { console.log("Connected to the mongodb-database."); })
+.catch((err, app) => {
+  console.log("Cannot connect to the mongodb-database !", err);
+  app.locals.mongoDbStatus = false;
+  // process.exit();
+});
+
+db.sqldb.sequelize.sync().then(() => {
+  console.log("Connected to the sql-database.");
+}).catch((err, app) => {
+  console.log("Cannot connect to the sql-database !", err);
+  app.locals.mysqlDbStatus = false;
+  // process.exit();
+});
+
+if (app.locals.mongoDbStatus) {
+  app.use('/api/mongoDb', apiRouterMongoDb);
+}
+if (app.locals.mysqlDbStatus) {
+  app.use('/api/sqlDb', apiRouterSqlDb);
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -49,19 +73,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-db.mongodb.mongoose.connect(db.mongodb.url, {
-  useNewUrlParser: true, useUnifiedTopology: true
-}).then(() => { console.log("Connected to the mongodb-database."); })
-.catch(err => {
-  console.log("Cannot connect to the mongodb-database !", err);
-  process.exit();
-});
-
-db.sqldb.sequelize.sync().then(() => {
-  console.log("Connected to the sql-database.");
-}).catch(err => {
-  console.log("Cannot connect to the sql-database !", err);
-  process.exit();
-});
 
 module.exports = app;
