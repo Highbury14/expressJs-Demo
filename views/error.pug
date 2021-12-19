@@ -1,6 +1,10 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  if error.status == 404
+    h1= 'Page/Resource ' + message
+  else
+    h1= message
+  h2= 'HTTP ' + error.status
+  if error.status != 404
+    pre #{error.stack}

@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Fetch Requests example</title>
+    <title>Fetch Requests example - SqlDb Integration</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
     />
   </head>
   <body>
-    <div class="container my-3" style="max-width: 600px">
-      <h3>Fetch Requests example</h3>
+    <div class="container my-3" style="max-width: 600px" id="contentAll1" >
+      <h3>Fetch Requests example - SqlDb Integration</h3>
 
       <div class="card mt-3">
         <div class="card-header">Fetch GET Request</div>
@@ -100,6 +100,17 @@
     </div>
 
     <script type="text/javascript" >
+      document.addEventListener('DOMContentLoaded', function() {
+        fetch("http://localhost:3000/api/dbStatus")
+        .then(response => response.json())
+        .then(data => { if (!data.mysqlDbStatus) {
+          document.getElementById('contentAll1')
+          .innerHTML = "<p>MySql database not available.</p>";
+
+          console.log("MySql database not available.");
+        } });
+      });
+
       function runJsScript() {
         baseURL += 'sqlDb';
       }

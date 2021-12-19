@@ -162,12 +162,12 @@ async function putData() {
   const id = document.getElementById("put-id").value;
   const title = document.getElementById("put-title").value;
   const description = document.getElementById("put-description").value;
-  const published = document.getElementById("put-published").checked;
+  const manufactured = document.getElementById("put-manufactured").checked;
 
   const putData = {
     title: title,
     description: description,
-    published: published,
+    manufactured: manufactured,
   };
 
   try {
