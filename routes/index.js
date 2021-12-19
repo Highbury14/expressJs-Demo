@@ -6,8 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'ExpressJs Demo Pug' });
 });
 
-router.get("/mongo-integrations/", function(req, res, next) {
-    res.json({ message: "Welcome to Bezkoder applications !" });
+router.get("/mongoDb-integrations/", function(req, res, next) {
+    res.json({ message: "Welcome to the ExpressJs application !" });
 });
 
 module.exports = router;
