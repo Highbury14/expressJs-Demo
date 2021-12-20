@@ -19,6 +19,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 const db = {mongodb: {}, sqldb: {}};
 db.mongodb.mongoose = mongoose;
 db.mongodb.url = dbConfig.mongodburl;
+db.mongodb.cloudUrl = dbConfig.mongoDbCloudUrl;
 db.mongodb.product = require("./product.mongodb.js")(mongoose);
 
 db.sqldb.Sequelize = Sequelize;

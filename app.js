@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-db.mongodb.mongoose.connect(db.mongodb.url, {
+db.mongodb.mongoose.connect(db.mongodb.cloudUrl, {
   useNewUrlParser: true, useUnifiedTopology: true
 }).then(() => { console.log("Connected to the mongodb-database."); })
 .catch((err, app) => {
