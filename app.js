@@ -36,7 +36,7 @@ app.use('/users', usersRouter);
 db.mongodb.mongoose.connect(db.mongodb.cloudUrl, {
   useNewUrlParser: true, useUnifiedTopology: true
 }).then(() => { console.log("Connected to the mongodb-database."); })
-.catch((err, app) => {
+.catch(err => {
   console.log("Cannot connect to the mongodb-database !", err);
   app.locals.mongoDbStatus = false;
   // process.exit();
@@ -44,7 +44,7 @@ db.mongodb.mongoose.connect(db.mongodb.cloudUrl, {
 
 db.sqldb.sequelize.sync().then(() => {
   console.log("Connected to the sql-database.");
-}).catch((err, app) => {
+}).catch(err => {
   console.log("Cannot connect to the sql-database !", err);
   app.locals.mysqlDbStatus = false;
   // process.exit();
